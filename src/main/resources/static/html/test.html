@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../bootstrap-3.3.7-dist/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="../bootstrap-table-dist/bootstrap-table.min.css">
+    <script src="../bootstrap-table-dist/bootstrap-table.min.js"></script>
+</head>
+<body>
+
+
+<script>
+    $(function () {
+
+        // 百分数转数字
+        function percent2Number(percentNum) {
+            return Number(percentNum.replace("%", "")) / 100;
+        }
+
+        console.info(percent2Number("5%"));
+
+
+        value = new Date();
+        console.info(value);
+
+    });
+
+</script>
+</body>
+</html>

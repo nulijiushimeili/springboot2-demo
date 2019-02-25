@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <script src="../bootstrap-3.3.7-dist/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="../bootstrap-table-dist/bootstrap-table.min.css">
+    <script src="../bootstrap-table-dist/bootstrap-table.min.js"></script>
+</head>
+<body>
+<h1>Welcome！</h1>
+
+<form id="myForm" action="" method="post">
+    用户名：<input type="text" id="uname" name="username"/><br/>
+    密码：<input type="password" id="pwd" name="password"/><br/>
+    <input type="button" value="注册" id="button"/></form>
+
+<div style="color: red;" id="mydiv"></div>
+
+<h2>注册用户信息</h2>
+<form action="" method="post">
+    <label>用户名：<input type="text" name="username" id="username"></label>
+    <label>密码：<input type="password" name="password" id="password"></label>
+    <label>性别：<input type="text" name="gender" id="gender"></label>
+    <label>手机号：<input type="number" name="cellphone" id="cellphone"></label>
+    <label>邮箱：<input type="email" name="email" id="email"></label>
+    <!--<input type="submit" name="email" value="注册">-->
+    <!--<input type="reset" name="email" value="重置">-->
+
+</form>
+<div>
+    <button id="registry">注册</button>
+    <button id="reset">取消</button>
+</div>
+<div id="show"></div>
+
+
+<button id="mk_table">show table</button>
+
+<div class="table-responsive">
+    <table class="table-striped" id="table01">
+
+    </table>
+</div>
+
+</body>
+<script>
+
+    $(function () {
+        $("#button").click(function () {
+            var url = "/registerUser";
+            $.post(
+                url,
+                {
+                    username: $("#uname").val(),
+                    password: $("#pwd").val()
+                },
+                function (data) {
+                    $("#mydiv").html("<p>" + data.username + "---------" + data.password + "<p>");
+                });
+        });
+
+
+        $("#registry").click(function () {
+            var url = "/registryTable";
+            $.post(
+                url,
+                {
+                    username: $("#username").val(),
+                    password: $("#password").val(),
+                    gender: $("#gender").val(),
+                    cellphone: $("#cellphone").val(),
+                    email: $("#email").val()
+                },
+                function (data) {
+                    $("#show").html("<h4>" +
+                        data.username + "---------" +
+                        data.password + "---------" +
+                        data.gender + "---------" +
+                        data.cellphone + "---------" +
+                        data.email + "---------" + "</h4>");
+
+                }
+            )
+
+        });
+
+
+        $("#table01").bootstrapTable({
+            url: "../registry",
+            method: 'post',
+            /* toolbar: '#toolbar',
+             striped: true,
+             cache: false,
+             pagination: true,
+             sortable: false,*/
+            contentType: "application/x-www-form-urlencoded",
+            queryParams: function () {
+                return {
+                    /* username: $("#username").val(),
+                     password: $("#password").val(),
+                     gender: $("#gender").val(),
+                     cellphone: $("#cellphone").val(),
+                     email: $("#email").val()*/
+                }
+            },
+            sidePagination: "server",
+            /* pageNumber: 10,
+             pageSize: 10,
+             pageList: [5, 10, 15, 20],*/
+            /* search: true,*/
+            // strictSearch: true,
+            miniMumCountCountColumns: 2,
+            clickToSelect: true,
+            height: 500,
+            uniqueId: "ID",
+            // showToggle:true,
+            cardView: false,
+            columns: [
+                {
+                    field: 'id0',
+                    title: '序号',
+                    checkbox: true
+                }, {
+                    field: 'id',
+                    title: '序号'
+                }, {
+                    field: 'username',
+                    title: '姓名'
+                }, {
+                    field: 'password',
+                    title: '密码'
+                }, {
+                    field: 'gender',
+                    title: '性别'
+                }, {
+                    field: 'cellphone',
+                    title: '电话号码'
+                }, {
+                    field: 'email',
+                    title: '电子邮箱'
+                }
+            ]
+
+        });
+
+    });
+
+</script>
+</html>

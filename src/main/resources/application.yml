@@ -1,0 +1,72 @@
+# 默认使用配置
+spring:
+  profiles:
+    active: dev
+
+# 公共配置与profiles选择无关 mapperLocations指的路径是src/main/resources
+# 本来mapper接口和mapper.xml在同一个包下，如果要放在resources文件夹下，则需要指定路径。
+mybatis:
+  typeAliasesPackage: nulijiushimeili.springboot2mybatis.module
+  mapperLocations: classpath:mapper/*.xml
+
+
+---
+
+# 开发环境的配置
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+
+# kafka 配置
+  kafka:
+    bootstrap-servers: 192.168.181.200:6667,127.0.0.2:9092,127.0.0.3:9092
+    consumer:
+      auto-offset-reset: earliest
+      group-id: group1
+      enable-auto-commit: true
+      auto-commit-interval: 10ms
+      properties:
+        session.timeout.ms: 15000
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      batch-size: 65536
+      buffer-memory: 524288
+      retries: 0
+      properties:
+        linger.ms: 1
+
+    topic:
+      topic-name:
+      - topic1: topic01
+      - topic2: topic02
+      - topic3: topic03
+
+
+server:
+  port: 8080
+
+
+# 设置随机变量
+nulijiushimeili:
+  # 配置随机值变量 ：
+  randomInt: ${random.int}
+  # 这是一个带有区间限制的随机变量
+  randomRangeInt: ${random.int[1024, 65535]}
+  # 自定义属性
+  helloWorld: hello word
+  # 这里也可以填写变量，引用上面的配置
+  helloWorld.append: hello word ${nulijiushimeili.helloWorld}
+
+
+

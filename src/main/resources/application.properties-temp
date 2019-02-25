@@ -1,0 +1,10 @@
+server.port=8080
+
+# 配置随机值变量
+nulijiushimeili.randomInt=${random.int}
+# 这是一个带有区间限制的随机变量
+nulijiushimeili.randomRangeInt=${random.int[1024, 65535]}
+# 自定义属性
+nulijiushimeili.helloWorld=hello word
+# 这里也可以填写变量，引用上面的配置
+nulijiushimeili.helloWorld.append=hello word ${nulijiushimeili.helloWorld}
