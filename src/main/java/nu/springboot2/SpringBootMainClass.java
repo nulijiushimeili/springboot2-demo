@@ -28,18 +28,17 @@ public class SpringBootMainClass implements CommandLineRunner {
     private SpringBootKafkaDemo springBootKafkaDemo;
 
 
-
     @Override
     public void run(String... args) throws Exception {
 
         /**
-         * 测试spring boot 的 demo
+         * 测试spring boot 集成 kafka 的 demo
          */
-        int i = 0;
-        while(true){
+//        int i = 0;
+//        while(true){
 //            springBootKafkaDemo.produceData("topic05",String.format("msg_%s,id,name,age,phoneNumber", i++));
-            Thread.sleep(1000);
-        }
+//            Thread.sleep(1000);
+//        }
 
 
     }

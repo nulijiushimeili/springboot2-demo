@@ -24,6 +24,33 @@
         <java.version>1.8</java.version>
     </properties>
 
+    <!--配置下载的仓库-->
+    <repositories>
+        <repository>
+            <id>repo</id>
+            <url>http://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>cloudera</id>
+            <url>https://repository.cloudera.com/content/repositories/releases/</url>
+        </repository>
+
+        <repository>
+            <id>spring-release</id>
+            <url>http://repo.spring.io/libs-release</url>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-release</id>
+            <url>http://repo.spring.io/libs-release</url>
+            <snapshots><enabled>false</enabled></snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+
     <dependencies>
 
         <!--web 项目的支持-->
@@ -134,7 +161,6 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
-
     </dependencies>
 
     <build>
@@ -143,7 +169,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
         </plugins>
+
+
     </build>
 
 

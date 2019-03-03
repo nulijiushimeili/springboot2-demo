@@ -24,11 +24,9 @@ spring:
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
 
-
-
 # kafka 配置
   kafka:
-    bootstrap-servers: 192.168.181.200:6667,127.0.0.2:9092,127.0.0.3:9092
+    bootstrap-servers: master:9092
     consumer:
       auto-offset-reset: earliest
       group-id: group1
