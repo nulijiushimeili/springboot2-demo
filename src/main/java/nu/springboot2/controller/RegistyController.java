@@ -38,7 +38,7 @@ public class RegistyController {
         // 访问数据库或处理数据的代码，这里只是简单做个处理            
         User user = new User();
         if (username != null) {
-            user.setUsername(username);
+            user.setName(username);
         }
         if (password != null) {
             user.setPassword(password);
@@ -56,7 +56,7 @@ public class RegistyController {
     public List<User> registerUser() {
         List<User> list = new ArrayList<User>();
         User user = new User();
-        user.setUsername("dsfsfs");
+        user.setName("dsfsfs");
         user.setPassword("sdfssss");
         user.setGender("s");
         user.setCellphone("tttttttt");
@@ -92,7 +92,7 @@ public class RegistyController {
     @ResponseBody
     public User register(HttpServletRequest request) {
         User user = new User();
-        user.setUsername(request.getParameter("username"));
+        user.setName(request.getParameter("username"));
         user.setPassword(request.getParameter("password"));
         return user;
     }

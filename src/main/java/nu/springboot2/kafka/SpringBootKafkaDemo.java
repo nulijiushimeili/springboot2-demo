@@ -30,14 +30,14 @@ public class SpringBootKafkaDemo {
     }
 
 
-    /**
-     * kafka 消费者
-     * @param record  监听到的每一条 kafka message
-     */
-    @Async
-    @KafkaListener(topics = "topic05", groupId = "group1" )
-    public void receiveData(String record){
-        System.out.println(record);
-    }
+//    /**
+//     * kafka 消费者
+//     * @param record  监听到的每一条 kafka message
+//     */
+//    @Async
+//    @KafkaListener(topics = "topic05", groupId = "group1" )
+//    public void receiveData(String record){
+//        System.out.println(record);
+//    }
 
 }

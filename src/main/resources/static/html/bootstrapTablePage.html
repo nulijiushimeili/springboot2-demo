@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分页bootstrap-table</title>
+    <script src="../bootstrap-3.3.7-dist/js/jquery-3.3.1.js"></script>
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../bootstrap-table-dist/bootstrap-table.min.css">
+    <script src="../bootstrap-table-dist/bootstrap-table.min.js"></script>
+    <script src="../bootstrap-table-dist/bootstrap-table-zh-CN.min.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#userTable").bootstrapTable({
+                url: '/queryAllUserByPage',
+                method: 'post',
+                pagination: true,
+                dataType: 'json',
+                striped: true,   // 是否显示行间隔色
+                sidePagination: 'server',   // 服务端处理分页
+                pageNumber: '1',
+                strictSearch: true,
+                showPaginationSwitch: true,    // 是否显示数据条数选择框
+                pageSize: 10,         // 如果设置了分页，页面数据显示的条数
+                pageList: [10, 25, 50, 100],
+                contentType: 'application/x-www-form-urlencoded',
+                onlyInfoPagination: true,
+                showPaginationSwitch: false,
+                queryParamsType: 'limit',
+                clickToSelect: true,                //是否启用点击选中行
+                // showRefresh: true,                  //是否显示刷新按钮
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                search: false,                      //是否显示表格搜索
+                showExport: true,                   // 显示导出插件
+                //工具按钮用哪个容器
+                toolbar: '#toolbar',
+                queryParams: function (params) {     // 这里是自定义的传给后台的分页参数值
+                    return {
+                        pageNumber: params.offset,         // 从数据库的第几条记录开始
+                        pageIndex: (params.offset / params.limit) + 1,     //
+                        pageSize: params.limit  // 找多少条
+                    }
+                },
+                uniqueId: "ID",
+                // showToggle:true,
+                cardView: false,
+                columns: [
+                    {
+                        field: 'id0',
+                        title: '序号',
+                        checkbox: true
+                    }, {
+                        field: 'id',
+                        title: '序号',
+                        align: 'center',       // 左右居中
+                        valign: 'middle'       // 上下居中
+                    }, {
+                        field: 'name',
+                        title: '姓名'
+                    }, {
+                        field: 'password',
+                        title: '密码'
+                    }
+                ],
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    showTips("数据加载失败！");
+                },
+                onDblClickRow: function (row, $element) {
+                    var id = row.ID;
+                    EditViewById(id, 'view');
+                }
+
+            })
+
+        });
+    </script>
+
+</head>
+<body>
+<div class="table-responsive ">
+<table id="userTable" class="table bootstrap-table sortable">
+
+</table>
+</div>
+
+
+</body>
+</html>

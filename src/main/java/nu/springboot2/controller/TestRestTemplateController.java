@@ -1,16 +1,23 @@
 package nu.springboot2.controller;
 
+import nu.springboot2.module.Page;
+import nu.springboot2.module.Res;
+import nu.springboot2.module.User;
+import nu.springboot2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Program: spring-boot2-mybatis
@@ -19,8 +26,11 @@ import org.springframework.web.client.RestTemplate;
  * Description:
  **/
 
-@RestController
+@Controller
 public class TestRestTemplateController {
+
+    @Autowired
+    private IUserService userService;
 
     /**
      * 这是一个用于测试的rest interface
@@ -31,6 +41,7 @@ public class TestRestTemplateController {
      *                返回值： {"code":0,"message":"success"}
      */
     @RequestMapping(value = "/requestParam",method = RequestMethod.POST)
+    @ResponseBody
     public Res test03(@RequestParam(value = "name") String name,
                       @RequestParam("age") int age){
         System.out.println("收到请求！");
@@ -47,6 +58,7 @@ public class TestRestTemplateController {
      * @return        返回的值直接映射成对应的对象
      */
     @RequestMapping(value = "/trtc01",method = RequestMethod.GET)
+    @ResponseBody
     public Res trtc01(){
         // 定义请求的数据
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -65,42 +77,29 @@ public class TestRestTemplateController {
     }
 
 
+    @RequestMapping(value = "/bootstrapTablePage",method = RequestMethod.GET)
+    public String toBootstrapTablePage(){
+        return "html/bootstrapTablePage.html";
+    }
+
+    @RequestMapping(value = "/queryAllUserByPage", method = RequestMethod.POST)
+    @ResponseBody
+    public Page queryAllUserByPage(HttpServletRequest request){
+        int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+        int pageSize = Integer.valueOf(request.getParameter("pageSize"));
+        System.out.println("分页： " + pageNumber + "---- " + pageSize);
+        Map<String,Integer> map = new HashMap<>();
+        map.put("pageNumber", pageNumber);
+        map.put("pageSize", pageSize);
+        List<User> list =  userService.queryAllUserByPage(map);
+        list.forEach(System.out::println);
+        int count = userService.userCount();
+        System.out.println(count);
+        Page page = new Page();
+        page.setRows(list);
+        page.setTotal(count);
+        return page;
+    }
+
 }
 
-/**
- * 这还是一个用于封装结果的对象
- */
-class Res{
-    private int code;
-    private String message;
-
-    public Res(){}
-
-    public Res(int code, String message){
-        this.code = code;
-        this.message = message;
-    }
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    @Override
-    public String toString() {
-        return "Res{" +
-                "code=" + code +
-                ", message='" + message + '\'' +
-                '}';
-    }
-}

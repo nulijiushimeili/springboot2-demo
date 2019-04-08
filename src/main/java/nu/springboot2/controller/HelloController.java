@@ -1,8 +1,9 @@
 package nu.springboot2.controller;
 
 
-import nu.springboot2.bean.User;
+
 import nu.springboot2.exception.BusinessException;
+import nu.springboot2.module.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
