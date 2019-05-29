@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="nu.springboot2.mapper.UserMapper" >
+
+    <!--mybatis if else-->
+   <insert id="testIfElse" parameterType="java.lang.Object">
+       insert into t_user (t_id,t_name,age,gender,address,phone_number) values(
+       #{id},
+       #{name},
+       #{age},
+       <choose>
+           <when test="address = null or address = ''">
+               #{phoneNumber},
+           </when>
+           <otherwise>
+               #{address},
+           </otherwise>
+       </choose>
+       #{phoneNumber}
+       )
+   </insert>
+
+
+    <!--mybatis 条件查询，不定参数。 需要在mapper中指定前缀名称，详见mapper-->
+    <select id="conditionSearch" parameterType="java.util.Map">
+        select * from t_user
+        where 1=1
+        <if test="map.age = null or map.age = ''">
+           and age &lt; #{age}
+        </if>
+        <if test="map.gender = null or map.gender = ''">
+            and gender = #{gender}
+        </if>
+
+
+    </select>
+
+
+    <!--// 插入数据返回自增id，关键看Service层的实现-->
+    <insert id="insertAndReturnId" parameterType="nu.springboot2.module.User" >
+        <selectKey keyProperty="id" resultType="java.lang.Integer">
+            select LAST_INSERT_ID() AS id
+        </selectKey>
+        insert into t_user (t_id,t_name,age,gender,address,phone_number) values(
+        #{id},
+        #{name},
+        #{age},
+        <choose>
+            <when test="address = null or address = ''">
+                #{phoneNumber},
+            </when>
+            <otherwise>
+                #{address},
+            </otherwise>
+        </choose>
+        #{phoneNumber}
+        )
+    </insert>
+
+    <!--// 批量插入数据-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_user (id,t_name) values
+        <foreach collection="list" item="userList" index="index" separator=",">
+            (
+            #{id},
+            #{name}
+            )
+        </foreach>
+    </insert>
+
+
+</mapper>
