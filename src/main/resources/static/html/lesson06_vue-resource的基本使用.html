@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-resource的基本使用</title>
+
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="../js/vue-2.6.10.js"></script>
+    <!--// vue-resource 依赖于 vue, 所以需要先引入 vue.js 文件。-->
+    <!--<script type="text/javascript" src="../../lib/vue-resource-1.3.4.js"></script>-->
+    <script src="../js/axios-0.19.0.min.js"></script>
+</head>
+<body>
+
+<h1> vue-resource 的基本使用 </h1>
+<p>通过 vue-resource 可以实现请求服务端的数据</p>
+<hr>
+
+<!--
+
+一、安装
+1、 利用npm安装npm install axios --save
+2、 利用bower安装bower install axios --save
+3、 直接利用cdn引入<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+二、下面是axios的github的地址，可以在dist目录下下载离线的 js 库
+https://github.com/axios/axios
+
+-->
+
+<div id="app">
+
+    <input type="button" value="get请求" @click="getInfo">
+    <input type="button" value="post请求" @click="postInfo">
+
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+
+        },
+        methods:{
+            getInfo(){    // 发起 get 请求
+                // 当发起get请求之后， 通过 .then 来设置成功的回调函数。
+                // this.$http.get("http://vue.studyit.io/api/getlunbo").then(function (result) {
+
+                axios.get('/getUser').then(function (result) {
+                    // 成功后，执行回调
+                    console.info("get 返回的数据： " +  JSON.stringify(result));
+                }).catch(function () {
+                    // 失败后执行回调
+                })
+            },
+            postInfo(){
+                axios.post("/registry").then(function(result){
+                    // 成功后，执行回调
+                    console.info("post 返回的数据： " +  JSON.stringify(result));
+                }).catch(function () {
+                    // 失败后执行回调
+                })
+            }
+        }
+    })
+
+</script>
+
+</body>
+</html>
