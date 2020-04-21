@@ -17,7 +17,6 @@
 <hr>
 
 <!--
-
 一、安装
 1、 利用npm安装npm install axios --save
 2、 利用bower安装bower install axios --save
@@ -33,36 +32,49 @@ https://github.com/axios/axios
     <input type="button" value="get请求" @click="getInfo">
     <input type="button" value="post请求" @click="postInfo">
 
+
+
 </div>
 
 <script>
     var vm = new Vue({
         el: '#app',
         data: {
+            userList: [
+                {"id": 0, "name": "dsfsfs"}
+            ],
 
         },
-        methods:{
-            getInfo(){    // 发起 get 请求
+        methods: {
+            getInfo() {    // 发起 get 请求
                 // 当发起get请求之后， 通过 .then 来设置成功的回调函数。
                 // this.$http.get("http://vue.studyit.io/api/getlunbo").then(function (result) {
 
                 axios.get('/getUser').then(function (result) {
                     // 成功后，执行回调
-                    console.info("get 返回的数据： " +  JSON.stringify(result));
+                    console.info("get 返回的数据： " + JSON.stringify(result));
+
+
                 }).catch(function () {
                     // 失败后执行回调
+                    console.error("获取数据失败");
                 })
             },
-            postInfo(){
-                axios.post("/registry").then(function(result){
+            postInfo() {
+                axios.post("/registry").then(function (result) {
                     // 成功后，执行回调
-                    console.info("post 返回的数据： " +  JSON.stringify(result));
+                    console.info("post 返回的数据： " + JSON.stringify(result));
+
+
                 }).catch(function () {
                     // 失败后执行回调
+                    console.error("获取数据失败");
+
                 })
             }
         }
-    })
+    });
+
 
 </script>
 
