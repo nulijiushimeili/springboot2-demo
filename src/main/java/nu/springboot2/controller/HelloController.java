@@ -2,9 +2,12 @@ package nu.springboot2.controller;
 
 
 
+import nu.springboot2.config.UDFProperties;
 import nu.springboot2.exception.BusinessException;
 import nu.springboot2.module.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class HelloController {
+
+    @Autowired
+    private UDFProperties udfProperties;
+
+    @GetMapping(value = "/getUDFProperties")
+    public String getUDFProperties(){
+        return  udfProperties.toString();
+    }
+
 
     /**
      * 读取application.properties 中自定义的属性
